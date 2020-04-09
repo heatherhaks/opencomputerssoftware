@@ -2,6 +2,47 @@ local term = require("term")
 local logLib = require("logLib")
 local drawLib = require("drawLib")
 
+--the drawing lib's api is as follows:
+--drawLib.new(foreground: Number, background: Number): Table
+  --Returns a drawLib object, foreground and background refer to the default colors to use, in hexadecimal 0xFFFFFF format
+--local drawer = drawLib.new(0x000000, 0xFFFFFF)
+  --example draw object creation
+--when seen elsewhere, cell refers to a table where the first entry is a string representing a character, and two colors in hexadecimal format
+--drawer.drawCell(x, y, cell)
+  --adds a cell to the draw buffer
+--drawer.eraseCell(x, y)
+  --adds an erase command to the draw buffer
+--drawer.clear()
+  --adds erase commands to the entire draw buffer
+--drawer.drawRect(x, y, width, height, cell)
+  --adds a rectangular grouping of cells to the draw buffer
+--drawer.eraseLine(y)
+  --adds a line of erase commands to the draw buffer
+--drawer.eraseRect(x, y, width, height)
+  --adds a rectangular group of erase commands to the draw buffer
+--drawer.drawString(x, y, string, foreground, background, width, height)
+  --adds a string of cells to the draw buffer
+--drawer..commit()
+  --commits the draw buffer to the screen
+
+--the logging lib's api is as follows:
+--logLib.new(drawLibObject: Table, x: Number, y: Number, width: Number[, opts: Table]): Table
+  --returns a logger object. It accepts a drawing object, an X and a Y location,
+  --a width and a height for the window, and a table full of the following fields:
+    --title: String --title of the log window, defaults to 'Log'
+    --foreground: Nunmber --the default text foreground color, defaults to drawLib's default foreground color
+    --background: Number --the default text background color, defaults to drawLib's default background color
+    --borderForeground: Number --the border foreground color, defaults to foreground color
+    --borderBackground: Number --the border background color, defaults to background color
+    --titleForeground: Number --the title foreground color, defaults to foreground color
+    --titleBackground: Number --the title background color, defaults to background color
+--local log = logLib.new(drawer, x, y, width, height)
+  --example of making a logLib object
+--log.addLog(message :String, foreground: Number, background: Number)
+  --foreground and background refer to hexadecimal color codes in 0xFFFFFF format, both are optional
+--log.draw()
+  --draws the logging object
+
 local drawer = drawLib.new()
 local x = 2
 local y = 2
